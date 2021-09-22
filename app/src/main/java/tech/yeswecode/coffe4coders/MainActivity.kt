@@ -27,12 +27,12 @@ fun NavigationHost() {
     val navController = rememberNavController()
     Coffe4codersTheme {
         Surface(color = MaterialTheme.colors.background) {
-            NavHost(navController = navController, startDestination = "feed") {
+            NavHost(navController = navController, startDestination = "detail") {
                 composable(route = "feed") {
                     FeedScreen(navController)
                 }
                 composable(route = "detail") {
-                    DetailScreen()
+                    DetailScreen(navController)
                 }
             }
         }
