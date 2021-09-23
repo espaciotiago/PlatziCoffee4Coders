@@ -12,7 +12,7 @@ typealias NavigationAction = () -> Unit
 fun CustomAppBar(title: String? = null,
                  navigationIcon: ImageVector? = null,
                  navigationAction: NavigationAction? = null) {
-    val titleText = title ?: ""
+    val titleText = title ?: "Coffee4Coders"
     if(navigationIcon != null && navigationAction != null) {
         TopAppBar(
             title = {Text(titleText)},
