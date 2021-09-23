@@ -16,6 +16,7 @@ import tech.yeswecode.coffe4coders.ui.screens.CheckoutScreen
 import tech.yeswecode.coffe4coders.ui.screens.DetailScreen
 import tech.yeswecode.coffe4coders.ui.screens.FeedScreen
 import tech.yeswecode.coffe4coders.ui.theme.Coffe4codersTheme
+import tech.yeswecode.coffe4coders.utilities.MockDataProvider
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,15 +34,17 @@ fun NavigationHost() {
                 composable(route = "feed") {
                     FeedScreen(navController)
                 }
-                composable(route = "detail/{countryIso}") { backStackEntry ->
-                    val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "COL"
-                    val countryIso = CountryISO.valueOf(countryIsoString)
-                    DetailScreen(navController, countryIso)
+                composable(route = "detail/{productId}") { backStackEntry ->
+                    val productIdString = backStackEntry.arguments?.getString("productId") ?: "0"
+                    val productId = productIdString.toInt()
+                    val product = MockDataProvider.getProductBy(productId)
+                    DetailScreen(navController, product!!)
                 }
-                composable(route = "checkout/{countryIso}") { backStackEntry ->
-                    val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "COL"
-                    val countryIso = CountryISO.valueOf(countryIsoString)
-                    CheckoutScreen(navController, countryIso)
+                composable(route = "checkout/{productId}") { backStackEntry ->
+                    val productIdString = backStackEntry.arguments?.getString("productId") ?: "0"
+                    val productId = productIdString.toInt()
+                    val product = MockDataProvider.getProductBy(productId)
+                    CheckoutScreen(navController, product!!)
                 }
             }
         }

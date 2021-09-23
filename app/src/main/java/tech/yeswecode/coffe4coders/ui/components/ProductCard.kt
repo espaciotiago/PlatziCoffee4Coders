@@ -16,9 +16,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tech.yeswecode.coffe4coders.R
+import tech.yeswecode.coffe4coders.models.Product
 import tech.yeswecode.coffe4coders.ui.theme.Coffe4codersTheme
 import tech.yeswecode.coffe4coders.ui.theme.PlatziBlue
 import tech.yeswecode.coffe4coders.ui.theme.PlatziGreen
+import tech.yeswecode.coffe4coders.utilities.MockDataProvider
 
 enum class  CountryISO(val iso: String) {
     COL("COL"),
@@ -55,13 +57,10 @@ enum class  CountryISO(val iso: String) {
 typealias SelectionAction = () -> Unit
 
 @Composable
-fun ProductCard(name: String,
-                summary: String,
-                price: Double,
-                currency: String,
-                country: CountryISO,
+fun ProductCard(product: Product,
                 selected: SelectionAction
 ) {
+    val country = CountryISO.valueOf(product.countryIso) ?: CountryISO.COL
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -83,9 +82,9 @@ fun ProductCard(name: String,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(16.dp)
             ) {
-                Text(name,
+                Text(product.name,
                     style = MaterialTheme.typography.h4)
-                Text(summary,
+                Text(product.summary,
                     style = MaterialTheme.typography.body1
                 )
                 Column(
@@ -97,7 +96,7 @@ fun ProductCard(name: String,
                             contentDescription = null,
                             modifier = Modifier.size(32.dp, 32.dp)
                         )
-                        Text("$ $price $currency",
+                        Text("$ ${product.price} ${product.currency}",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
                             style = MaterialTheme.typography.h4)
@@ -113,12 +112,12 @@ fun ProductCard(name: String,
 )
 @Composable
 fun ProductCardPreview() {
-    Coffe4codersTheme {
-        ProductCard("Café de Brasil",
-            "Café de las montañas",
-            35.0,
-            "USD",
-            CountryISO.BRA
-        ) {}
+    val product = MockDataProvider.getProductBy(0)
+    if (product != null) {
+        Coffe4codersTheme {
+            ProductCard(product) {}
+        }
+    } else  {
+        Text("Erro en preview")
     }
 }

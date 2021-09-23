@@ -19,12 +19,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import tech.yeswecode.coffe4coders.ui.components.*
 import tech.yeswecode.coffe4coders.ui.theme.Coffe4codersTheme
+import tech.yeswecode.coffe4coders.utilities.MockDataProvider
 
 @Composable
 fun FeedScreen(navController: NavController) {
-    val list = listOf<CountryISO>(
-        CountryISO.COL, CountryISO.CRI, CountryISO.NIC, CountryISO.BRA
-    )
+    val list = MockDataProvider.listOfProducts()
 
     Scaffold(topBar = {
         CustomAppBar()
@@ -42,15 +41,9 @@ fun FeedScreen(navController: NavController) {
 
                 }
             }
-            items(list) { country ->
-                ProductCard(
-                    name = "Café de Colombia",
-                    summary = "Café de las montañas",
-                    price = 35.0,
-                    currency = "USD",
-                    country = country
-                ) {
-                    navController.navigate("detail/${country.iso}"){
+            items(list) { product ->
+                ProductCard(product) {
+                    navController.navigate("detail/${product.id}"){
                         launchSingleTop = true
                     }
                 }

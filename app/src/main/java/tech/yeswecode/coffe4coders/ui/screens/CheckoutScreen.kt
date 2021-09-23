@@ -15,11 +15,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import tech.yeswecode.coffe4coders.models.Product
 import tech.yeswecode.coffe4coders.ui.components.*
 import tech.yeswecode.coffe4coders.ui.theme.Coffe4codersTheme
+import tech.yeswecode.coffe4coders.utilities.MockDataProvider
 
 @Composable
-fun CheckoutScreen(navController: NavController, country: CountryISO) {
+fun CheckoutScreen(navController: NavController, product: Product) {
     val cities = listOf(
         "Ciudad de México, México",
         "La Habana, Cuba",
@@ -39,20 +41,14 @@ fun CheckoutScreen(navController: NavController, country: CountryISO) {
 
     Scaffold(topBar = {
         CustomAppBar(navigationIcon = Icons.Filled.ArrowBack) {
-            navController.navigate("detail/${country.iso}")
+            navController.navigate("detail/${product.id}")
         }
     }, content = {
 
         Column(
             modifier = Modifier.verticalScroll(rememberScrollState())
         ){
-            ProductCard(
-                name = "Café de colombia",
-                summary = "Café de las montañas",
-                price = 35.0,
-                currency = "USD",
-                country = country
-            ) {}
+            ProductCard(product) {}
 
             Column(
                 modifier = Modifier.padding(16.dp)
@@ -107,8 +103,11 @@ fun CheckoutScreen(navController: NavController, country: CountryISO) {
 @Preview(showBackground = true)
 @Composable
 fun CheckoutScreenPreview() {
-    val navController = rememberNavController()
-    Coffe4codersTheme {
-        CheckoutScreen(navController, CountryISO.COL)
+    val product = MockDataProvider.getProductBy(0)
+    if(product != null){
+        val navController = rememberNavController()
+        Coffe4codersTheme {
+            CheckoutScreen(navController, product)
+        }
     }
 }
