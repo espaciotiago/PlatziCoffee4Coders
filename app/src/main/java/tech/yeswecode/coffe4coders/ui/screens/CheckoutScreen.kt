@@ -96,7 +96,7 @@ fun CheckoutScreen(navController: NavController, country: CountryISO) {
                         textAlign = TextAlign.Start
                     )
                     CustomButton(label = "Finalizar pedido") {
-                        
+
                     }
                 }
             }
